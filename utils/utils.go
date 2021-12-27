@@ -23,7 +23,7 @@ func mdDataToMap(mdData []string) map[string][]string {
 			mdMap[splitLine[1]] = []string{}
 			currentIndex = splitLine[1]
 		} else {
-			mdMap[currentIndex] = append(mdMap[currentIndex], splitLine[1])
+			mdMap[currentIndex] = append(mdMap[currentIndex], strings.Trim(splitLine[1], "~"))
 		}
 	}
 	return mdMap

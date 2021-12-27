@@ -20,6 +20,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/ttacon/chalk"
 	"github.com/zyrre/next/utils"
 )
 
@@ -35,9 +36,8 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("root called")
-		fileMap, _ := utils.FileToMap("next")
-		fmt.Println(fileMap["Doing"][0])
+		fileMap, _ := utils.FileToMap("next.md")
+		fmt.Println(chalk.Bold.TextStyle(fileMap["Doing"][0]))
 	},
 }
 
