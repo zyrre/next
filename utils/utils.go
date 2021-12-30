@@ -2,6 +2,7 @@ package utils
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strings"
 )
@@ -12,6 +13,39 @@ func FileToMap(filename string) (map[string][]string, error) {
 		return nil, err
 	}
 	return mdDataToMap(lines), nil
+}
+
+func CompleteTask(task string, mdMap map[string][]string) {
+	file, err := os.Create("next.md")
+	if err != nil {
+		fmt.Println(err)
+		file.Close()
+		return
+	}
+	defer file.Close()
+	startOfFile := true
+	startOfCompleted := true
+	for i, list := range mdMap {
+		if !startOfFile {
+			fmt.Fprintln(file, "")
+		}
+		startOfFile = false
+		fmt.Fprintln(file, "# "+i)
+		fmt.Fprintln(file, "")
+		for _, line := range list {
+			if line != task {
+				if i == "Completed" {
+					if startOfCompleted {
+						fmt.Fprintln(file, "- ~~"+task+"~~")
+						startOfCompleted = false
+					}
+					fmt.Fprintln(file, "- ~~"+line+"~~")
+				} else {
+					fmt.Fprintln(file, "- "+line)
+				}
+			}
+		}
+	}
 }
 
 func mdDataToMap(mdData []string) map[string][]string {
