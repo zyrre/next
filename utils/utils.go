@@ -108,6 +108,29 @@ func RemoveTask(task string) error {
 	return nil
 }
 
+func StartTask(task string) error {
+	lines, doingStart, _, err := parseFile(filename)
+	if err != nil {
+		return err
+	}
+	file, err := os.Create(filename)
+	if err != nil {
+		fmt.Println(err)
+		file.Close()
+		return err
+	}
+	defer file.Close()
+	for i, line := range lines {
+		if doingStart != 0 && i == doingStart+2 {
+			fmt.Fprintln(file, "- "+task)
+		}
+		if i > doingStart || strings.Trim(line, "- ~") != task {
+			fmt.Fprintln(file, line)
+		}
+	}
+	return nil
+}
+
 func mdDataToMap(mdData []string) map[string][]string {
 	mdMap := make(map[string][]string)
 	var currentIndex string
