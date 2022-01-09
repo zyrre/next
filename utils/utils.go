@@ -10,7 +10,7 @@ import (
 const filename = "next.md"
 
 func FileToMap(filename string) (map[string][]string, error) {
-	lines, _, _, err := parseFile(filename)
+	lines, _, _, _, err := parseFile(filename, "")
 	if err != nil {
 		return nil, err
 	}
@@ -18,7 +18,7 @@ func FileToMap(filename string) (map[string][]string, error) {
 }
 
 func CompleteTask() (string, error) {
-	lines, doingStart, completedStart, err := parseFile(filename)
+	lines, doingStart, completedStart, _, err := parseFile(filename, "")
 	if err != nil {
 		return "", err
 	}
@@ -42,8 +42,8 @@ func CompleteTask() (string, error) {
 	return "", nil
 }
 
-func UndoTask() (string, error) {
-	lines, doingStart, completedStart, err := parseFile(filename)
+func UndoTask(taskName string) (string, error) {
+	lines, doingStart, completedStart, taskLine, err := parseFile(filename, taskName)
 	if err != nil {
 		return "", err
 	}
@@ -55,11 +55,14 @@ func UndoTask() (string, error) {
 	}
 	defer file.Close()
 	for i, line := range lines {
-		if doingStart != 0 && i == doingStart+2 {
-			fmt.Fprintln(file, "- "+strings.Trim(lines[completedStart+2], "- ~"))
+		if i == taskLine {
+			//line of completed task, so not printing it
+		} else if doingStart != 0 && i == doingStart+2 && taskLine != 0 && taskLine > completedStart {
+			fmt.Fprintln(file, "- "+taskName)
 			fmt.Fprintln(file, line)
-		} else if completedStart != 0 && i == completedStart+2 {
-			//line of task to be undone, so not printing it under the "Completed" section
+		} else if i == 3 && taskLine != 0 && taskLine < completedStart {
+			fmt.Fprintln(file, "- "+taskName)
+			fmt.Fprintln(file, line)
 		} else {
 			fmt.Fprintln(file, line)
 		}
@@ -68,7 +71,7 @@ func UndoTask() (string, error) {
 }
 
 func AddTask(task string) error {
-	lines, _, _, err := parseFile(filename)
+	lines, _, _, _, err := parseFile(filename, "")
 	if err != nil {
 		return err
 	}
@@ -89,7 +92,7 @@ func AddTask(task string) error {
 }
 
 func RemoveTask(task string) error {
-	lines, _, _, err := parseFile(filename)
+	lines, _, _, _, err := parseFile(filename, "")
 	if err != nil {
 		return err
 	}
@@ -109,7 +112,7 @@ func RemoveTask(task string) error {
 }
 
 func StartTask(task string) error {
-	lines, doingStart, _, err := parseFile(filename)
+	lines, doingStart, _, _, err := parseFile(filename, "")
 	if err != nil {
 		return err
 	}
@@ -150,10 +153,10 @@ func mdDataToMap(mdData []string) map[string][]string {
 }
 
 //parse a file and return each non-whitespace line
-func parseFile(filename string) ([]string, int, int, error) {
+func parseFile(filename string, task string) ([]string, int, int, int, error) {
 	file, err := os.Open(filename)
 	if err != nil {
-		return nil, 0, 0, err
+		return nil, 0, 0, 0, err
 	}
 	defer file.Close()
 
@@ -161,13 +164,16 @@ func parseFile(filename string) ([]string, int, int, error) {
 	var lines []string
 	doingStart := 0
 	completedStart := 0
+	taskLine := 0
 	for scanner.Scan() {
 		if scanner.Text() == "# Doing" {
 			doingStart = len(lines)
 		} else if scanner.Text() == "# Completed" {
 			completedStart = len(lines)
+		} else if task != "" && strings.Trim(scanner.Text(), "- ~") == task {
+			taskLine = len(lines)
 		}
 		lines = append(lines, scanner.Text())
 	}
-	return lines, doingStart, completedStart, scanner.Err()
+	return lines, doingStart, completedStart, taskLine, scanner.Err()
 }

@@ -37,7 +37,9 @@ to quickly create a Cobra application.`,
 
 	Run: func(cmd *cobra.Command, args []string) {
 		fileMap, _ := utils.FileToMap("next.md")
-		fmt.Println(chalk.Bold.TextStyle(fileMap["Doing"][0]))
+		for _, doing := range fileMap["Doing"] {
+			fmt.Println(chalk.Bold.TextStyle(doing))
+		}
 	},
 }
 

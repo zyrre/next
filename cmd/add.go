@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
+Copyright © 2021 Peter Krantz zyrree@gmail.com
 
 */
 package cmd

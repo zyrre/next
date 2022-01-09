@@ -1,11 +1,12 @@
 /*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
+Copyright © 2021 Peter Krantz zyrree@gmail.com
 
 */
 package cmd
 
 import (
 	"fmt"
+	"os/exec"
 
 	"github.com/spf13/cobra"
 	"github.com/zyrre/next/utils"
@@ -23,6 +24,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		utils.StartTask(args[0])
+		_ = exec.Command("code", ".").Run()
 		fmt.Println(args[0] + " started")
 	},
 }
