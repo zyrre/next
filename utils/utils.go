@@ -9,6 +9,30 @@ import (
 
 const filename = "next.md"
 
+func InitFile() error {
+	wd, _ := os.Getwd()
+	_, err := os.Stat(wd + "/" + filename)
+	if err == nil {
+		return fmt.Errorf("file already exists")
+	}
+	file, err := os.Create(filename)
+	if err != nil {
+		fmt.Println(err)
+		file.Close()
+		return err
+	}
+	defer file.Close()
+	fmt.Fprintln(file, "# To do")
+	fmt.Fprintln(file, "")
+	fmt.Fprintln(file, "")
+	fmt.Fprintln(file, "# Doing")
+	fmt.Fprintln(file, "")
+	fmt.Fprintln(file, "")
+	fmt.Fprintln(file, "# Completed")
+	fmt.Fprintln(file, "")
+	fmt.Fprintln(file, "")
+	return nil
+}
 func FileToMap(filename string) (map[string][]string, error) {
 	lines, _, _, _, err := parseFile(filename, "")
 	if err != nil {
