@@ -18,6 +18,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 	"github.com/ttacon/chalk"
@@ -37,8 +38,9 @@ to quickly create a Cobra application.`,
 
 	Run: func(cmd *cobra.Command, args []string) {
 		fileMap, _ := utils.FileToMap("next.md")
-		for _, doing := range fileMap["Doing"] {
-			fmt.Println(chalk.Bold.TextStyle(doing))
+		fmt.Println("Currently working on:")
+		for i, doing := range fileMap["Doing"] {
+			fmt.Println(chalk.Bold.TextStyle("[d" + strconv.Itoa(i) + "] " + doing))
 		}
 	},
 }

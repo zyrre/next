@@ -6,6 +6,7 @@ package cmd
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/spf13/cobra"
 	"github.com/ttacon/chalk"
@@ -24,8 +25,8 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fileMap, _ := utils.FileToMap("next.md")
-		for _, todo := range fileMap["To do"] {
-			fmt.Println(chalk.Italic.TextStyle(todo))
+		for i, todo := range fileMap["To do"] {
+			fmt.Println(chalk.Italic.TextStyle("[t" + strconv.Itoa(i) + "] " + todo))
 		}
 	},
 }
