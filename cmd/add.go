@@ -8,6 +8,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/ttacon/chalk"
 	"github.com/zyrre/next/utils"
 )
 
@@ -23,7 +24,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		utils.AddTask(args[0])
-		fmt.Println(args[0] + " added in To do")
+		fmt.Println(utils.TaskColor + chalk.Italic.TextStyle(args[0]) + utils.TextColor + " added")
 	},
 }
 

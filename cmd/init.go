@@ -26,7 +26,7 @@ to quickly create a Cobra application.`,
 		if err != nil {
 			fmt.Println(err)
 		} else {
-			fmt.Println("next.md created")
+			fmt.Println(utils.TextColor + "next.md created")
 		}
 	},
 }

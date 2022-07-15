@@ -25,8 +25,9 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fileMap, _ := utils.FileToMap("next.md")
+		fmt.Println(utils.TextColor + "Tasks to do:")
 		for i, todo := range fileMap["To do"] {
-			fmt.Println(chalk.Italic.TextStyle("[t" + strconv.Itoa(i) + "] " + todo))
+			fmt.Println(chalk.Italic.TextStyle(utils.TaskColor + "[t" + strconv.Itoa(i) + "] " + todo))
 		}
 	},
 }

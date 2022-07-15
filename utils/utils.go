@@ -8,7 +8,18 @@ import (
 	"strings"
 )
 
-const filename = "next.md"
+const (
+	filename = "next.md"
+	Color1   = "\033[31m"
+	Color2   = "\033[32m"
+	Color3   = "\033[33m"
+	Color4   = "\033[34m"
+	Color5   = "\033[35m"
+	Color6   = "\033[36m"
+
+	TaskColor = Color2
+	TextColor = Color4
+)
 
 func InitFile() error {
 	wd, _ := os.Getwd()

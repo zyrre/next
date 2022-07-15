@@ -24,7 +24,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		utils.UndoTask(args[0])
-		fmt.Println(chalk.Bold.TextStyle(args[0] + " undone"))
+		fmt.Println(chalk.Bold.TextStyle(utils.TaskColor + chalk.Bold.TextStyle(args[0]) + utils.TextColor + " undone"))
 	},
 }
 

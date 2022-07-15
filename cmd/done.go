@@ -25,7 +25,7 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fileMap, _ := utils.FileToMap("next.md")
 		utils.CompleteTask()
-		fmt.Println(chalk.Strikethrough.TextStyle(fileMap["Doing"][0]))
+		fmt.Println(chalk.Strikethrough.TextStyle(utils.TaskColor + fileMap["Doing"][0]))
 	},
 }
 

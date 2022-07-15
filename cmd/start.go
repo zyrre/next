@@ -25,7 +25,7 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		utils.StartTask(args[0])
 		_ = exec.Command("code", ".", "-r").Run()
-		fmt.Println(args[0] + " started")
+		fmt.Println(utils.TaskColor + args[0] + utils.TextColor + " started")
 	},
 }
 
