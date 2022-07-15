@@ -24,7 +24,7 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		err := utils.InitFile()
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println(utils.TextColor + err.Error())
 		} else {
 			fmt.Println(utils.TextColor + "next.md created")
 		}
