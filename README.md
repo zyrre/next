@@ -15,6 +15,7 @@
   - ```next``` - show current task
   - ```next done``` - complete current task
   - ```next todo``` - show all tasks in todo list
+  - ```next completed``` - show all completed tasks
   - ```next add "make fancy github readme"``` - create new task in todo list
 * Saved locally in markdown format
 * ***Fancy styling***
