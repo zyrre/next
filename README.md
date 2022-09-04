@@ -7,7 +7,7 @@
 
 <h4 align="center">A simple todo CLI app, using .md files in your project directories. Written in Go.</h4>
 
-![next2](https://user-images.githubusercontent.com/2995732/188302759-2a3763ed-a2df-4fa8-b3f2-5a0b2739ff91.gif)
+![next3](https://user-images.githubusercontent.com/2995732/188331439-32f49b88-49bd-4bd3-b519-9e41ef9bb2e2.gif)
 
 ## Features
 
